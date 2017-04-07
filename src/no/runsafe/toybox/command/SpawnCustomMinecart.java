@@ -16,16 +16,29 @@ public class SpawnCustomMinecart extends PlayerCommand
 		super("spawncustomminecart",
 				"Spawn a custom minecart!",
 				"runsafe.toybox.spawnminecart",
-				new RequiredArgument("blockName"),
-				new WholeNumber("blockOffset").withDefault(8)
+				new RequiredArgument(Args.blockName.value),
+				new WholeNumber(Args.blockOffset.value).withDefault(8)
 		);
+	}
+
+	private enum Args
+	{
+		blockName("blockName"),
+		blockOffset("blockOffset");
+
+		private final String value;
+
+		Args(String newArgumentName)
+		{
+			this.value = newArgumentName;
+		}
 	}
 
 	@Override
 	public String OnExecute(IPlayer executor, IArgumentList parameters)
 	{
 		//Get input
-		String blockName = parameters.getValue("blockName");
+		String blockName = parameters.getValue(Args.blockName.value);
 		blockName.toLowerCase();
 
 		//Create minecart
@@ -38,7 +51,7 @@ public class SpawnCustomMinecart extends PlayerCommand
 		minecart.setDisplayBlock(minecartBlock.getBlockData());
 
 		//Set block offset
-		minecart.SetDisplayBlockOffset((Integer) parameters.getValue("blockOffset"));
+		minecart.SetDisplayBlockOffset((Integer) parameters.getValue(Args.blockOffset.value));
 
 		return null;
 	}
