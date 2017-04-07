@@ -37,6 +37,9 @@ public class SpawnCustomMinecart extends PlayerCommand
 	@Override
 	public String OnExecute(IPlayer executor, IArgumentList parameters)
 	{
+		if (executor.getLocation() == null)
+			return "Invalid location.";
+
 		//Get input
 		String blockName = parameters.getValue(Args.blockName.value);
 		blockName.toLowerCase();
