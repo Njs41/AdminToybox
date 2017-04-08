@@ -1,13 +1,12 @@
 package no.runsafe.toybox.command;
 
-import net.minecraft.server.v1_8_R3.*;
+import no.runsafe.framework.api.ILocation;
 import no.runsafe.framework.api.command.argument.*;
 import no.runsafe.framework.api.command.player.PlayerCommand;
-import no.runsafe.framework.api.entity.IEntity;
 import no.runsafe.framework.api.player.IPlayer;
-import no.runsafe.framework.internal.wrapper.ObjectUnwrapper;
 import no.runsafe.framework.minecraft.entity.PassiveEntity;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
+import no.runsafe.framework.minecraft.entity.RunsafeMinecart;
+import org.bukkit.Material;
 
 public class SpawnCustomMinecart extends PlayerCommand
 {
@@ -16,7 +15,7 @@ public class SpawnCustomMinecart extends PlayerCommand
 		super("spawncustomminecart",
 				"Spawn a custom minecart!",
 				"runsafe.toybox.spawnminecart",
-				new RequiredArgument(Args.blockName.value),
+				new Enumeration(Args.blockName.value, Material.values()).require(),
 				new WholeNumber(Args.blockOffset.value).withDefault(8)
 		);
 	}
@@ -37,24 +36,18 @@ public class SpawnCustomMinecart extends PlayerCommand
 	@Override
 	public String OnExecute(IPlayer executor, IArgumentList parameters)
 	{
-		if (executor.getLocation() == null)
+		ILocation location = executor.getLocation();
+		if (location == null)
 			return "Invalid location.";
 
-		//Get input
-		String blockName = parameters.getValue(Args.blockName.value);
-		blockName.toLowerCase();
-
 		//Create minecart
-		IEntity minecartEntity = PassiveEntity.Minecart.spawn(executor.getLocation());
-		CraftEntity craftEntity = ObjectUnwrapper.convert(minecartEntity);
-		EntityMinecartAbstract minecart = (EntityMinecartAbstract) craftEntity.getHandle();
+		RunsafeMinecart minecart = (RunsafeMinecart) PassiveEntity.Minecart.spawn(location);
 
 		//Create block in minecart
-		Block minecartBlock = Block.getByName(blockName);
-		minecart.setDisplayBlock(minecartBlock.getBlockData());
+		minecart.setDisplayBlock((Material) parameters.getValue(Args.blockName.value));
 
 		//Set block offset
-		minecart.SetDisplayBlockOffset((Integer) parameters.getValue(Args.blockOffset.value));
+		minecart.setDisplayBlockOffset((Integer) parameters.getValue(Args.blockOffset.value));
 
 		return null;
 	}
