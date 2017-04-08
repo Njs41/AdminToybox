@@ -16,11 +16,27 @@ public class Bazooka extends PlayerCommand
 {
 	public Bazooka(IScheduler scheduler)
 	{
-		super(
-			"bazooka", "Fire an entity and make it explode", "runsafe.toybox.bazooka",
-			new EntityType().require(), new WholeNumber("delay").require(), new DecimalNumber("strength").require()
+		super("bazooka",
+			"Fire an entity and make it explode",
+			"runsafe.toybox.bazooka",
+			new EntityType().require(),
+			new WholeNumber(Args.delay.value).require(),
+			new DecimalNumber(Args.strength.value).require()
 		);
 		this.scheduler = scheduler;
+	}
+
+	private enum Args
+	{
+		delay("delay"),
+		strength("strength");
+
+		private final String value;
+
+		Args(String newArgumentName)
+		{
+			this.value = newArgumentName;
+		}
 	}
 
 	@Override
@@ -29,8 +45,8 @@ public class Bazooka extends PlayerCommand
 		final IWorld world = executor.getWorld();
 		if (world == null)
 			return null;
-		final Integer delay = parameters.getValue("delay");
-		final Float strength = parameters.getValue("strength");
+		final Integer delay = parameters.getValue(Args.delay.value);
+		final Float strength = parameters.getValue(Args.strength.value);
 		final IEntity projectile = executor.Launch((RunsafeEntityType) parameters.getValue("entityType"));
 		if (projectile != null && delay != null && strength != null)
 		{

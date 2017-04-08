@@ -12,21 +12,36 @@ public class Nuke extends PlayerCommand
 {
 	public Nuke()
 	{
-		super(
-			"nuke", "Nukes in a certain radius", "runsafe.toybox.nuke",
-			new RequiredArgument("radius"), new RequiredArgument("power")
+		super("nuke",
+			"Nukes in a certain radius",
+			"runsafe.toybox.nuke",
+			new RequiredArgument(Args.radius.value),
+			new RequiredArgument(Args.power.value)
 		);
+	}
+
+	private enum Args
+	{
+		radius("radius"),
+		power("power");
+
+		private final String value;
+
+		Args(String newArgumentName)
+		{
+			this.value = newArgumentName;
+		}
 	}
 
 	@Override
 	public String OnExecute(IPlayer executor, IArgumentList parameters)
 	{
-		int radius = Integer.valueOf(parameters.get("radius"));
+		int radius = Integer.valueOf(parameters.get(Args.radius.value));
 
 		if (radius > 15)
 			return "Max radius size: 15";
 
-		int power = Integer.valueOf(parameters.get("power"));
+		int power = Integer.valueOf(parameters.get(Args.power.value));
 		ILocation location = executor.getLocation();
 
 		location.decrementX(radius);

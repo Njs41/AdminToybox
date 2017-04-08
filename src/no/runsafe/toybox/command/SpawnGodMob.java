@@ -18,23 +18,38 @@ public class SpawnGodMob extends PlayerCommand
 {
 	public SpawnGodMob()
 	{
-		super(
-			"spawngodmob", "Spawns a god-like mob", "runsafe.toybox.spawngodmob",
-			new EntityType("mobName").require(), new WholeNumber("amount").require()
+		super("spawngodmob",
+			"Spawns a god-like mob",
+			"runsafe.toybox.spawngodmob",
+			new EntityType(Args.mobName.value).require(),
+			new WholeNumber(Args.amount.value).require()
 		);
+	}
+
+	private enum Args
+	{
+		mobName("mobName"),
+		amount("amount");
+
+		private final String value;
+
+		Args(String newArgumentName)
+		{
+			this.value = newArgumentName;
+		}
 	}
 
 	@Override
 	public String OnExecute(IPlayer executor, IArgumentList parameters)
 	{
-		Integer n = parameters.getValue("amount");
+		Integer n = parameters.getValue(Args.amount.value);
 		IWorld world = executor.getWorld();
 		if (world == null || n == null)
 			return null;
 
 		for (int i = 0; i < n; ++i)
 		{
-			String mobName = parameters.get("mobName");
+			String mobName = parameters.get(Args.mobName.value);
 			IEntity entity = world.spawnCreature(executor.getLocation(), mobName);
 			if (entity instanceof RunsafeLivingEntity)
 			{

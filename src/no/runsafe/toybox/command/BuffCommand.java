@@ -15,18 +15,34 @@ public class BuffCommand extends ExecutableCommand
 {
 	public BuffCommand()
 	{
-		super(
-			"buff", "Apply a buff to a target player", "runsafe.toybox.buff",
-			new MapRequired<Buff>("effect", buffs),
-			new WholeNumber("duration").withDefault(36000), new WholeNumber("amplitude").withDefault(5),
+		super("buff",
+			"Apply a buff to a target player",
+			"runsafe.toybox.buff",
+			new MapRequired<Buff>(Args.effect.value, buffs),
+			new WholeNumber(Args.duration.value).withDefault(36000),
+			new WholeNumber(Args.amplitude.value).withDefault(5),
 			new Player().onlineOnly().defaultToExecutor()
 		);
+	}
+
+	private enum Args
+	{
+		effect("effect"),
+		duration("duration"),
+		amplitude("amplitude");
+
+		private final String value;
+
+		Args(String newArgumentName)
+		{
+			this.value = newArgumentName;
+		}
 	}
 
 	@Override
 	public String OnExecute(ICommandExecutor executor, IArgumentList parameters)
 	{
-		Buff effect = parameters.getValue("effect");
+		Buff effect = parameters.getValue(Args.effect.value);
 		if (effect == null)
 			return null;
 
@@ -34,8 +50,8 @@ public class BuffCommand extends ExecutableCommand
 		if (target == null)
 			return null;
 
-		Integer amp = parameters.getValue("amplitude");
-		Integer duration = parameters.getValue("duration");
+		Integer amp = parameters.getValue(Args.amplitude.value);
+		Integer duration = parameters.getValue(Args.duration.value);
 		assert (amp != null && duration != null);
 		effect.amplification(amp).duration(duration).applyTo(target);
 		return null;

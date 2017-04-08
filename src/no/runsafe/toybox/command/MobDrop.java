@@ -12,11 +12,26 @@ public class MobDrop extends PlayerCommand
 {
 	public MobDrop(MobDropHandler handler)
 	{
-		super(
-			"mobdrop", "Drops a block full of mobs", "runsafe.toybox.mobdrop",
-			new EntityType("mobType").require(), new RequiredArgument("amount")
+		super("mobdrop",
+			"Drops a block full of mobs",
+			"runsafe.toybox.mobdrop",
+			new EntityType(Args.mobType.value).require(),
+			new RequiredArgument(Args.amount.value)
 		);
 		this.handler = handler;
+	}
+
+	private enum Args
+	{
+		mobType("mobType"),
+		amount("amount");
+
+		private final String value;
+
+		Args(String newArgumentName)
+		{
+			this.value = newArgumentName;
+		}
 	}
 
 	@Override
@@ -24,8 +39,8 @@ public class MobDrop extends PlayerCommand
 	{
 		handler.createMobDropper(
 			executor.getLocation(),
-			(RunsafeEntityType) parameters.getValue("mobType"),
-			(Integer) parameters.getValue("amount")
+			(RunsafeEntityType) parameters.getValue(Args.mobType.value),
+			(Integer) parameters.getValue(Args.amount.value)
 		);
 		return null;
 	}
