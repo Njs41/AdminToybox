@@ -17,11 +17,27 @@ public class SpawnHorse extends PlayerCommand
 	{
 		super(
 			"spawnhorse", "Spawns a horse", "runsafe.toybox.spawnmob",
-			new RequiredArgument("count"), new RequiredArgument("tame"),
-			new Enumeration("type", SpawnableHorseType.values()),
-			new Enumeration("variant", SpawnableHorseVariant.values())
+			new RequiredArgument(Args.count.value),
+			new RequiredArgument(Args.tame.value),
+			new Enumeration(Args.type.value, SpawnableHorseType.values()),
+			new Enumeration(Args.variant.value, SpawnableHorseVariant.values())
 		);
 		this.horseSpawner = horseSpawner;
+	}
+
+	private enum Args
+	{
+		count("count"),
+		tame("tame"),
+		type("type"),
+		variant("variant");
+
+		private final String value;
+
+		Args(String newArgumentName)
+		{
+			this.value = newArgumentName;
+		}
 	}
 
 	@Override
@@ -29,17 +45,17 @@ public class SpawnHorse extends PlayerCommand
 	{
 		try
 		{
-			SpawnableHorseType type = parameters.getValue("type");
+			SpawnableHorseType type = parameters.getValue(Args.type.value);
 			if (type == null)
 				type = this.getRandomHorseType();
-			SpawnableHorseVariant variant = parameters.getValue("variant");
+			SpawnableHorseVariant variant = parameters.getValue(Args.variant.value);
 			if (variant == null)
 				variant = this.getRandomHorseVariant();
 
-			int count = Integer.valueOf(parameters.get("count"));
+			int count = Integer.valueOf(parameters.get(Args.count.value));
 
 			for (int i = 0; i < count; ++i)
-				this.horseSpawner.spawnHorse(executor.getLocation(), type, variant, parameters.get("tame").equals("1"));
+				this.horseSpawner.spawnHorse(executor.getLocation(), type, variant, parameters.get(Args.tame.value).equals("1"));
 		}
 		catch (IllegalArgumentException exception)
 		{
