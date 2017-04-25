@@ -25,7 +25,7 @@ public class Mount extends PlayerCommand
 		if (target == null)
 			return "&cUnable to find target..";
 
-		if (target.getName().equalsIgnoreCase(executor.getName()))
+		if (target.equals(executor))
 			return "&cYou cannot mount yourself, this would end badly.";
 
 		target.setPassenger(executor);

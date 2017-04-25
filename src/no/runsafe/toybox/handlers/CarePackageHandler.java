@@ -13,13 +13,15 @@ import no.runsafe.framework.minecraft.item.meta.RunsafeMeta;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class CarePackageHandler
 {
 	public CarePackageHandler(IServer server)
 	{
 		this.server = server;
-		this.awaitingDrops = new HashMap<String, RunsafeInventory>();
+		this.awaitingDrops = new ConcurrentHashMap<UUID, RunsafeInventory>();
 		this.fallingDrops = new HashMap<Integer, RunsafeInventory>();
 	}
 
@@ -27,22 +29,22 @@ public class CarePackageHandler
 	{
 		RunsafeInventory newInventory = server.createInventory(null, 27, "Care Package"); // Create
 		player.openInventory(newInventory); // Show player the inventory.
-		this.awaitingDrops.put(player.getName(), newInventory); // Store the inventory pointer.
+		this.awaitingDrops.put(player.getUniqueId(), newInventory); // Store the inventory pointer.
 	}
 
 	public boolean PlayerHasOpenCarePackage(IPlayer player)
 	{
-		return this.awaitingDrops.containsKey(player.getName()); // Does the player have an awaiting drop?
+		return this.awaitingDrops.containsKey(player.getUniqueId()); // Does the player have an awaiting drop?
 	}
 
 	private RunsafeInventory GetAwaitingInventory(IPlayer player)
 	{
-		return this.awaitingDrops.get(player.getName()); // Get an awaiting inventory linked to a player.
+		return this.awaitingDrops.get(player.getUniqueId()); // Get an awaiting inventory linked to a player.
 	}
 
 	private void RemoveAwaitingInventory(IPlayer player)
 	{
-		this.awaitingDrops.remove(player.getName()); // Remove awaiting drop linked to player.
+		this.awaitingDrops.remove(player.getUniqueId()); // Remove awaiting drop linked to player.
 	}
 
 	private RunsafeInventory GetFallingInventory(Integer entityID)
@@ -86,7 +88,7 @@ public class CarePackageHandler
 		}
 	}
 
-	private final HashMap<String, RunsafeInventory> awaitingDrops;
+	private final ConcurrentHashMap<UUID, RunsafeInventory> awaitingDrops;
 	private final HashMap<Integer, RunsafeInventory> fallingDrops;
 	private final IServer server;
 }
