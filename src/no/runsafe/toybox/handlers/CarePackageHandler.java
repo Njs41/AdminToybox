@@ -62,7 +62,7 @@ public class CarePackageHandler
 		IWorld world = player.getWorld();
 		if (world == null)
 			return;
-		IEntity block = world.spawnFallingBlock(player.getLocation(), Item.Decoration.Chest);
+		IEntity block = world.spawnFallingBlock(player.getLocation(), Item.BuildingBlock.Wood.Plank.Oak);
 		((RunsafeFallingBlock) block).setDropItem(false);
 		this.fallingDrops.put(block.getEntityId(), this.GetAwaitingInventory(player));
 		this.RemoveAwaitingInventory(player);

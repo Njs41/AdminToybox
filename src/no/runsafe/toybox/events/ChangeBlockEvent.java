@@ -23,7 +23,7 @@ public class ChangeBlockEvent implements IEntityChangeBlockEvent
 		if (this.handler.CheckDrop(entityID))
 		{
 			ILocation blockLocation = event.getBlock().getLocation();
-			blockLocation.getBlock().setMaterial(Item.Decoration.Chest);
+			blockLocation.getBlock().set(Item.Decoration.Chest);
 
 			this.handler.ProcessDrop(entityID, blockLocation.getBlock());
 			event.cancel();
