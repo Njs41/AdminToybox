@@ -10,6 +10,7 @@ import no.runsafe.toybox.handlers.LockedObjectHandler;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class Lock extends PlayerCommand implements IPlayerInteractEvent
 {
@@ -25,15 +26,15 @@ public class Lock extends PlayerCommand implements IPlayerInteractEvent
 	@Override
 	public String OnExecute(IPlayer executor, IArgumentList parameters)
 	{
-		String playerName = executor.getName();
-		if (this.lockingPlayers.contains(playerName))
+		UUID playerUUID = executor.getUniqueId();
+		if (this.lockingPlayers.contains(playerUUID))
 		{
-			this.lockingPlayers.remove(playerName);
+			this.lockingPlayers.remove(playerUUID);
 			return "&eLocking disabled.";
 		}
 		else
 		{
-			this.lockingPlayers.add(playerName);
+			this.lockingPlayers.add(playerUUID);
 			return "&2Locking enabled: Right click objects to lock them.";
 		}
 	}
@@ -43,11 +44,11 @@ public class Lock extends PlayerCommand implements IPlayerInteractEvent
 	{
 		IBlock block = event.getBlock();
 		IPlayer player = event.getPlayer();
-		String playerName = player.getName();
+		UUID playerUUID = player.getUniqueId();
 
 		if (block != null)
 		{
-			if (this.lockingPlayers.contains(playerName))
+			if (this.lockingPlayers.contains(playerUUID))
 			{
 				if (this.handler.isLockedBlock(block))
 				{
@@ -76,6 +77,6 @@ public class Lock extends PlayerCommand implements IPlayerInteractEvent
 		}
 	}
 
-	private List<String> lockingPlayers = new ArrayList<String>();
+	private List<UUID> lockingPlayers = new ArrayList<UUID>();
 	private LockedObjectHandler handler;
 }
