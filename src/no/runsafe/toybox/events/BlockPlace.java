@@ -15,11 +15,19 @@ public class BlockPlace implements IBlockPlace
 			ISign sign = (ISign) block;
 			if (sign.getLine(0).equals("[Infinite]"))
 				if (!player.hasPermission("runsafe.toybox.infinitedispensers"))
-				{
-					player.sendColouredMessage(String.format("&cI'm sorry %s, I'm afraid I can't let you do that", player.getName()));
-					return false;
-				}
+					return denyAction(player);
 		}
 		return true;
+	}
+
+	/**
+	 * Displays the message "I'm sorry playername, I'm afraid I can't let you do that" and returns false.
+	 * @param player player to deny action.
+	 * @return false.
+	 */
+	private boolean denyAction(IPlayer player)
+	{
+		player.sendColouredMessage(String.format("&cI'm sorry %s, I'm afraid I can't let you do that", player.getName()));
+		return false;
 	}
 }
