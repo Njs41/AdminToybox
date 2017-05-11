@@ -8,6 +8,7 @@ import no.runsafe.framework.api.event.block.IBlockPlace;
 import no.runsafe.framework.api.minecraft.IInventoryHolder;
 import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.minecraft.inventory.RunsafeInventory;
+import no.runsafe.framework.minecraft.item.meta.RunsafeMeta;
 
 public class BlockPlace implements IBlockPlace
 {
@@ -27,7 +28,12 @@ public class BlockPlace implements IBlockPlace
 
 			if (inventory != null)
 				if (inventory.getTitle().equalsIgnoreCase("Infinite"))
+				{
+					RunsafeMeta item = player.getItemInHand();
+					if (item != null)
+						item.setDisplayName("§MInfinite.§R");
 					return denyAction(player);
+				}
 		}
 		return true;
 	}

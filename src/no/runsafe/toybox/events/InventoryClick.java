@@ -21,6 +21,7 @@ public class InventoryClick implements IInventoryClick
 					IPlayer player = event.getWhoClicked();
 					if (!player.hasPermission("runsafe.toybox.infinitedispensers"))
 					{
+						item.setDisplayName("§MInfinite.§R");
 						player.sendColouredMessage("&cYou do not have permission to make those.");
 						event.cancel();
 					}
