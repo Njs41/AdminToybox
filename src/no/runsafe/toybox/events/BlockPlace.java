@@ -24,8 +24,7 @@ public class BlockPlace implements IBlockPlace
 			RunsafeMeta item = player.getItemInHand();
 			try
 			{
-				if (item.getRawMeta() != null
-					&& item.hasDisplayName()
+				if (item.hasDisplayName()
 					&& item.getDisplayName().equals("Infinite")
 					&& !player.hasPermission("runsafe.toybox.infinitedispensers")
 				)
