@@ -2,10 +2,12 @@ package no.runsafe.toybox.events;
 
 import no.runsafe.framework.api.block.IBlock;
 import no.runsafe.framework.api.block.IDispenser;
+import no.runsafe.framework.api.block.IDropper;
 import no.runsafe.framework.api.block.ISign;
 import no.runsafe.framework.api.event.block.IBlockPlace;
+import no.runsafe.framework.api.minecraft.IInventoryHolder;
 import no.runsafe.framework.api.player.IPlayer;
-import no.runsafe.framework.minecraft.item.meta.RunsafeMeta;
+import no.runsafe.framework.minecraft.inventory.RunsafeInventory;
 
 public class BlockPlace implements IBlockPlace
 {
@@ -19,21 +21,13 @@ public class BlockPlace implements IBlockPlace
 				if (!player.hasPermission("runsafe.toybox.infinitedispensers"))
 					return denyAction(player);
 		}
-		else if (block instanceof IDispenser)
+		else if (block instanceof IDispenser || block instanceof IDropper)
 		{
-			RunsafeMeta item = player.getItemInHand();
-			try
-			{
-				if (item.hasDisplayName()
-					&& item.getDisplayName().equals("Infinite")
-					&& !player.hasPermission("runsafe.toybox.infinitedispensers")
-				)
+			RunsafeInventory inventory = ((IInventoryHolder) block).getInventory();
+
+			if (inventory != null)
+				if (inventory.getTitle().equalsIgnoreCase("Infinite"))
 					return denyAction(player);
-			}
-			catch (NullPointerException e)
-			{
-				return true;
-			}
 		}
 		return true;
 	}
