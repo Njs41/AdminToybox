@@ -4,8 +4,6 @@ import no.runsafe.framework.api.ILocation;
 import no.runsafe.framework.api.entity.IEntity;
 import no.runsafe.framework.api.minecraft.RunsafeEntityType;
 import no.runsafe.framework.minecraft.Item;
-import no.runsafe.framework.minecraft.entity.EntityType;
-import no.runsafe.framework.minecraft.entity.RunsafeEntity;
 import no.runsafe.toybox.MobDropData;
 
 import java.util.HashMap;

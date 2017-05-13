@@ -4,7 +4,6 @@ import no.runsafe.framework.api.ILocation;
 import no.runsafe.framework.api.command.argument.IArgumentList;
 import no.runsafe.framework.api.command.player.PlayerCommand;
 import no.runsafe.framework.api.entity.ILivingEntity;
-import no.runsafe.framework.api.entity.IProjectileSource;
 import no.runsafe.framework.api.event.entity.IEntityDamageByEntityEvent;
 import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.minecraft.Item;

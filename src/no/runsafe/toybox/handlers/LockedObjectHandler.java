@@ -1,6 +1,5 @@
 package no.runsafe.toybox.handlers;
 
-import com.google.common.collect.Lists;
 import no.runsafe.framework.api.ILocation;
 import no.runsafe.framework.api.IServer;
 import no.runsafe.framework.api.IWorld;

@@ -3,7 +3,6 @@ package no.runsafe.toybox.command;
 import no.runsafe.framework.api.IWorld;
 import no.runsafe.framework.api.command.argument.EntityType;
 import no.runsafe.framework.api.command.argument.IArgumentList;
-import no.runsafe.framework.api.command.argument.RequiredArgument;
 import no.runsafe.framework.api.command.argument.WholeNumber;
 import no.runsafe.framework.api.command.player.PlayerCommand;
 import no.runsafe.framework.api.entity.IEntity;
