@@ -6,6 +6,7 @@ import no.runsafe.framework.api.command.player.PlayerCommand;
 import no.runsafe.framework.api.player.IPlayer;
 import no.runsafe.framework.minecraft.entity.PassiveEntity;
 import no.runsafe.framework.minecraft.entity.RunsafeMinecart;
+import org.bukkit.Material;
 
 public class SpawnCustomMinecart extends PlayerCommand
 {
@@ -14,7 +15,7 @@ public class SpawnCustomMinecart extends PlayerCommand
 		super("spawncustomminecart",
 				"Spawn a custom minecart!",
 				"runsafe.toybox.spawnminecart",
-				new Enumeration(BLOCK_NAME, org.bukkit.Material.values()).require(),
+				new Enumeration(BLOCK_NAME, Material.values()).require(),
 				new WholeNumber(BLOCK_OFFSET).withDefault(8)
 		);
 	}
@@ -33,7 +34,7 @@ public class SpawnCustomMinecart extends PlayerCommand
 		RunsafeMinecart minecart = (RunsafeMinecart) PassiveEntity.Minecart.spawn(location);
 
 		//Create block in minecart
-		minecart.setDisplayBlock((org.bukkit.Material) parameters.getValue(BLOCK_NAME));
+		minecart.setDisplayBlock((Material) parameters.getValue(BLOCK_NAME));
 
 		//Set block offset
 		minecart.setDisplayBlockOffset((Integer) parameters.getValue(BLOCK_OFFSET));
