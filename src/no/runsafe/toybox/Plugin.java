@@ -9,7 +9,6 @@ import no.runsafe.toybox.events.*;
 import no.runsafe.toybox.handlers.CarePackageHandler;
 import no.runsafe.toybox.handlers.LockedObjectHandler;
 import no.runsafe.toybox.handlers.MobDropHandler;
-import no.runsafe.toybox.horses.HorseSpawner;
 import no.runsafe.toybox.repositories.LockedObjectRepository;
 
 public class Plugin extends RunsafePlugin
@@ -29,8 +28,6 @@ public class Plugin extends RunsafePlugin
 		addComponent(LockedObjectHandler.class);
 		addComponent(CarePackageHandler.class);
 		addComponent(MobDropHandler.class);
-
-		addComponent(HorseSpawner.class);
 
 		// Commands
 		addComponent(Bazooka.class);
