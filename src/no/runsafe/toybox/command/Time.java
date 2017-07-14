@@ -1,6 +1,5 @@
 package no.runsafe.toybox.command;
 
-import no.runsafe.framework.api.IUniverseManager;
 import no.runsafe.framework.api.IWorld;
 import no.runsafe.framework.api.command.ExecutableCommand;
 import no.runsafe.framework.api.command.ICommandExecutor;
@@ -11,7 +10,7 @@ import no.runsafe.framework.api.log.IConsole;
 
 public class Time extends ExecutableCommand
 {
-	public Time(IConsole console, IUniverseManager manager)
+	public Time(IConsole console)
 	{
 		super(
 			"time", "Change the time in a world", "runsafe.toybox.time",
@@ -19,7 +18,6 @@ public class Time extends ExecutableCommand
 			new AutoWorldArgument()
 		);
 		this.console = console;
-		this.manager = manager;
 	}
 
 	private static final String TIME = "time";
@@ -63,5 +61,4 @@ public class Time extends ExecutableCommand
 	}
 
 	private final IConsole console;
-	private final IUniverseManager manager;
 }
